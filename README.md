@@ -1,88 +1,22 @@
-# 🔄 File-Syncers
-**Safe, one-way file synchronization with automatic backups and visual diffs.**
+# legacy/
 
-[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+This folder contains earlier versions of the File-Syncers script, preserved for historical reference.
 
-A command-line utility that watches a source directory (like `~/Downloads/project`) and selectively updates matching files in a target project folder — but only when content actually differs. Every overwrite is backed up first, and you can preview changes with a unified diff before applying them.
+## Purpose
 
-## ✨ Why File-Syncers?
-- **Content-aware sync** — SHA256 hashing ensures only genuinely changed files are updated, not just files with newer timestamps.
-- **Automatic backups** — every file overwritten gets a timestamped `.bak` copy before the new version lands.
-- **Visual diff preview** — see exactly what lines changed (`+`/`-`) before committing with `--show-diff`.
-- **Safe by default** — `--dry-run` mode lets you preview all operations without touching a single file.
-- **Move or copy** — choose whether to leave the source file in place or delete it after a successful sync (`--move`).
+These files represent the development history of the tool before the v1.0 refactor. They are kept here so that the evolution of the design — from the initial approach to the current architecture — remains visible and accessible.
 
-## 🧠 How It Works
-1. Scans the **downloads directory** for files.
-2. Walks the **project directory** looking for matching filenames.
-3. Hashes both files with SHA256; skips if identical.
-4. If different: backs up the project file → copies the new file in → (optionally) deletes the source.
-5. With `--show-diff`, generates a unified diff and prints a summary table showing added/removed lines per file.
+## Status
 
-## 🚀 Quick Start
-```bash
-# Clone the repo
-git clone https://github.com/SS-Sauron/File-Syncers.git
-cd File-Syncers
+**These scripts are not maintained and should not be used in production.**
 
-# Dry-run to see what would happen
-python sync_files.py --dry-run --show-diff
+They may lack:
+- The SHA256 content-hashing check (only timestamp or filename comparison)
+- Timestamped backups before overwriting
+- The `--dry-run` safeguard
+- Error handling around file I/O
+- Cross-platform path resolution
 
-# Live sync with move (delete source after copy)
-python sync_files.py --move
-```
-📖 Usage
-```text
+## Current Version
 
-usage: sync_files.py [-h] [--downloads-path DOWNLOADS_PATH]
-                     [--project-path PROJECT_PATH]
-                     [--backup-path BACKUP_PATH] [--dry-run]
-                     [--ignore-dirs [IGNORE_DIRS ...]] [--show-diff]
-                     [--move] [--log-level {DEBUG,INFO,WARNING,ERROR}]
-```
----
-Flag	Description
---downloads-path	Source directory to watch (default: ~/Downloads/project)
---project-path	Target project directory (default: ~/daleel)
---backup-path	Where backups are stored (default: ~/Desktop/Project_Backups)
---dry-run	Preview changes without modifying anything
---show-diff	Display a unified diff and change summary table
---move	Delete source files after successful copy
---ignore-dirs	Directories to skip (default: .git, node_modules, venv, __pycache__)
----
-🛡️ Safety Features
-
-    Timestamped backups — format: filename.YYYYMMDD_HHMMSS.bak
-
-    Dry-run mode — see exactly what will change before it happens
-
-    Error resilience — all file I/O is wrapped in try/except; errors are logged, not crashed on
-
-    No accidental self-sync — detects if source and destination are the same file and skips
----
-
-📦 Tech Stack
-
-    Python 3.8+ (standard library only: os, shutil, hashlib, argparse, logging, difflib, pathlib)
-
-    Zero external dependencies
----
-
-🗺️ Roadmap
-
-    Watch mode (auto-sync on file changes via watchdog)
-
-    Configuration file support (YAML/TOML)
-
-    Multi-source sync (watch multiple download folders)
-
-    Slack/Telegram notifications on sync completion
----
-🤝 Contributing
-
-Contributions welcome! Please open an issue first to discuss your idea. See CONTRIBUTING.md for guidelines.
----
-📄 License
-
-MIT License. See LICENSE for details.
+The production script is [`sync_files.py`](../sync_files.py) at the repository root. See the main [`README.md`](../README.md) for full usage documentation.
