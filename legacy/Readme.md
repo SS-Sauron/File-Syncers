@@ -1,4 +1,4 @@
-# legacy/
+# legacy
 
 This folder contains earlier versions of the File-Syncers script, preserved for historical reference.
 
